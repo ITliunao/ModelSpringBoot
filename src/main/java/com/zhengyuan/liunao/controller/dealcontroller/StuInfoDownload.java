@@ -27,7 +27,7 @@ public class StuInfoDownload {
 	public void export(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Stu> list = stuService.findAll();
 		// excel标题
-		String[] title = { "学号", "姓名", "性别", "年级", "班级", "手机号", "qq号", "用户头像" };
+		String[] title = { "学号", "姓名", "性别", "年级", "班级", "手机号", "qq号" };
 		// excel文件名
 		String fileName = "学生信息表" + System.currentTimeMillis() + ".xls";
 		// sheet名
@@ -43,7 +43,6 @@ public class StuInfoDownload {
 			content[i][4] = stu.getClassid();
 			content[i][5] = stu.getPhone();
 			content[i][6] = stu.getQq();
-			content[i][7] = stu.getPhoto();
 		}
 
 		HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);

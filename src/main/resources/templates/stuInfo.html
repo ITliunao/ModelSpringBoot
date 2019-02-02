@@ -56,7 +56,7 @@
       
       <xblock >
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button type="button" class="layui-btn layui-btn-primary" >批量导入</button>
+        <button type="button" class="layui-btn layui-btn-primary" id="uploadExcel">批量导入</button>
         <button type="button" class="layui-btn layui-btn-primary" onclick="exportTable()">批量导出</button>
         <button class="layui-btn" onclick="stuAdd()"><i class="layui-icon"></i>添加</button>
       </xblock>
@@ -105,7 +105,7 @@
               ,{field:'qq', title:'qq号', width:documentWidth*10/100}
               ,{field: 'photo', title: '用户头像',templet:function(d){
             	     return d.photo == null ? 
-            	  '<a><img src="/Sys/images/my1.png"></a>':
+            	  '<a><img src="/Sys/images/defaultUser.png"></a>':
             		  '<a><img src="../uploads/'+d.photo+'"></a>';
               },edit: 'file'} 
               /* ,{field: 'photo', title: '用户头像',templet:'<a><img src="../uploads/{{d.photo}}"></a>'
@@ -258,6 +258,23 @@
   function exportTable(){
 	  location.href="/Sys/export";  
   }
+  
+
+  layui.use(['element','upload'], function() {
+  	element = layui.element;
+  	upload = layui.upload;
+   
+  	//指定允许上传的文件类型
+  	upload.render({
+  	  elem: '#uploadExcel'
+  	  ,url: '/Sys/ImportStu'
+  	  ,field:'excel'
+  	  ,done: function(res){
+  	      console.log(res);
+  	   }
+  	});
+  });
+
 
 
 </script>  
