@@ -1,27 +1,29 @@
 package com.zhengyuan.liunao.tools;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFDataFormat;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSON;
 
 public class ExcelUtil {
-
-	private static POIFSFileSystem fs;
-	private static HSSFWorkbook wb;
-	private static HSSFSheet sheet;
-	private static HSSFRow row;
 
 	/**
 	 * 导出Excel
@@ -66,7 +68,7 @@ public class ExcelUtil {
 			for (int j = 0; j < values[i].length; j++) {
 				// 将内容按顺序赋给对应的列对象
 				System.out.println(values[i][j].getBytes().length);
-				sheet.setColumnWidth(j, values[i][j].getBytes().length * 2 * 256);
+				sheet.setColumnWidth(j, values[i][j].getBytes().length * 1 * 256);
 				row.createCell(j).setCellValue(values[i][j]);
 				/*
 				 * else { String imgPath = MyTool.getImg() + values[i][j]; FileOutputStream
@@ -88,166 +90,99 @@ public class ExcelUtil {
 		return wb;
 	}
 
-	/**
-	 * 读取Excel表格表头的内容
-	 * 
-	 * @param is
-	 * @return String 表头内容的数组
-	 */
-	public String[] readExcelTitle(InputStream is) {
-		try {
-			fs = new POIFSFileSystem(is);
-			wb = new HSSFWorkbook(fs);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		sheet = wb.getSheetAt(0);
-		// 得到首行的row
-		row = sheet.getRow(0);
-		// 标题总列数
-		int colNum = row.getPhysicalNumberOfCells();
-		String[] title = new String[colNum];
-		for (int i = 0; i < colNum; i++) {
-			title[i] = getCellFormatValue(row.getCell((short) i));
-		}
-		return title;
-	}
+	public static LinkedHashMap<String, String> excel2json(MultipartFile file) throws IOException {
 
-	/**
-	 * 读取Excel数据内容
-	 * 
-	 * @param is
-	 * @return Map 包含单元格数据内容的Map对象
-	 */
-	public static Map<Integer, String> readExcelContent(InputStream is) {
-		Map<Integer, String> content = new HashMap<Integer, String>();
-		String str = "";
-		try {
-			fs = new POIFSFileSystem(is);
-			wb = new HSSFWorkbook(fs);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		sheet = wb.getSheetAt(0);
-		// 得到总行数
-		int rowNum = sheet.getLastRowNum();
-		row = sheet.getRow(1);
-		int colNum = row.getPhysicalNumberOfCells();
-		// 正文内容应该从第二行开始,第一行为表头的标题
-		for (int i = 1; i <= rowNum; i++) {
-			row = sheet.getRow(i);
-			int j = 0;
-			while (j < colNum) {
-				str += getCellFormatValue(row.getCell((short) j)).trim() + "-";
-				j++;
-			}
-			content.put(i, str);
-			str = "";
-		}
-		return content;
-	}
+		System.out.println("excel2json方法执行....");
 
-	/**
-	 * 获取单元格数据内容为字符串类型的数据
-	 *
-	 * @param cell Excel单元格
-	 * @return String 单元格数据内容
-	 */
-	private String getStringCellValue(HSSFCell cell) {
-		String strCell = "";
-		switch (cell.getCellType()) {
-		case HSSFCell.CELL_TYPE_STRING:
-			strCell = cell.getStringCellValue();
-			break;
-		case HSSFCell.CELL_TYPE_NUMERIC:
-			strCell = String.valueOf(cell.getNumericCellValue());
-			break;
-		case HSSFCell.CELL_TYPE_BOOLEAN:
-			strCell = String.valueOf(cell.getBooleanCellValue());
-			break;
-		case HSSFCell.CELL_TYPE_BLANK:
-			strCell = "";
-			break;
-		default:
-			strCell = "";
-			break;
-		}
-		if (strCell.equals("") || strCell == null) {
-			return "";
-		}
-		if (cell == null) {
-			return "";
-		}
-		return strCell;
-	}
+		// 返回的map
+		LinkedHashMap<String, String> excelMap = new LinkedHashMap<>();
 
-	/**
-	 * 获取单元格数据内容为日期类型的数据
-	 *
-	 * @param cell Excel单元格
-	 * @return String 单元格数据内容
-	 */
-	private String getDateCellValue(HSSFCell cell) {
-		String result = "";
-		try {
-			int cellType = cell.getCellType();
-			if (cellType == HSSFCell.CELL_TYPE_NUMERIC) {
-				Date date = cell.getDateCellValue();
-				result = (date.getYear() + 1900) + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-			} else if (cellType == HSSFCell.CELL_TYPE_STRING) {
-				String date = getStringCellValue(cell);
-				result = date.replaceAll("[年月]", "-").replace("日", "").trim();
-			} else if (cellType == HSSFCell.CELL_TYPE_BLANK) {
-				result = "";
-			}
-		} catch (Exception e) {
-			System.out.println("日期格式不正确!");
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	/**
-	 * 根据HSSFCell类型设置数据
-	 * 
-	 * @param cell
-	 * @return
-	 */
-	private static String getCellFormatValue(HSSFCell cell) {
-		String cellvalue = "";
-		if (cell != null) {
-			// 判断当前Cell的Type
-			switch (cell.getCellType()) {
-			// 如果当前Cell的Type为NUMERIC
-			case HSSFCell.CELL_TYPE_NUMERIC:
-			case HSSFCell.CELL_TYPE_FORMULA: {
-				// 判断当前的cell是否为Date
-				if (HSSFDateUtil.isCellDateFormatted(cell)) {
-					Date date = cell.getDateCellValue();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					cellvalue = sdf.format(date);
-				}
-				// 如果是纯数字
-				else {
-					// 取得当前Cell的数值
-					cellvalue = String.valueOf(cell.getNumericCellValue());
-				}
-				break;
-			}
-			// 如果当前Cell的Type为STRIN
-			case HSSFCell.CELL_TYPE_STRING:
-				// 取得当前的Cell字符串
-				cellvalue = cell.getRichStringCellValue().getString();
-				break;
-			// 默认的Cell值
-			default:
-				cellvalue = " ";
-			}
+		// Excel列的样式，主要是为了解决Excel数字科学计数的问题
+		CellStyle cellStyle;
+		// 根据Excel构成的对象
+		Workbook wb;
+		// 如果是2007及以上版本，则使用想要的Workbook以及CellStyle
+		if (file.getOriginalFilename().endsWith("xlsx")) {
+			wb = new XSSFWorkbook(file.getInputStream());
+			XSSFDataFormat dataFormat = (XSSFDataFormat) wb.createDataFormat();
+			cellStyle = wb.createCellStyle();
+			// 设置Excel列的样式为文本
+			cellStyle.setDataFormat(dataFormat.getFormat("@"));
 		} else {
-			cellvalue = "";
+			System.out.println("是2007以下版本  xls");
+			POIFSFileSystem fs = new POIFSFileSystem(file.getInputStream());
+			wb = new HSSFWorkbook(fs);
+			HSSFDataFormat dataFormat = (HSSFDataFormat) wb.createDataFormat();
+			cellStyle = wb.createCellStyle();
+			// 设置Excel列的样式为文本
+			cellStyle.setDataFormat(dataFormat.getFormat("@"));
 		}
-		return cellvalue;
 
+		// sheet表个数
+		int sheetsCounts = wb.getNumberOfSheets();
+		// 遍历每一个sheet
+		for (int i = 0; i < sheetsCounts; i++) {
+			Sheet sheet = wb.getSheetAt(i);
+			System.out.println("第" + i + "个sheet:" + sheet.toString());
+
+			// 一个sheet表对于一个List
+			List list = new LinkedList();
+
+			// 将第一行的列值作为正个json的key
+			String[] cellNames;
+			// 取第一行列的值作为key
+			Row fisrtRow = sheet.getRow(0);
+			// 如果第一行就为空，则是空sheet表，该表跳过
+			if (null == fisrtRow) {
+				continue;
+			}
+			// 得到第一行有多少列
+			int curCellNum = fisrtRow.getLastCellNum();
+			System.out.println("第一行的列数：" + curCellNum);
+			// 根据第一行的列数来生成列头数组
+			cellNames = new String[curCellNum];
+			// 单独处理第一行，取出第一行的每个列值放在数组中，就得到了整张表的JSON的key
+			for (int m = 0; m < curCellNum; m++) {
+				Cell cell = fisrtRow.getCell(m);
+				// 设置该列的样式是字符串
+				cell.setCellStyle(cellStyle);
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				// 取得该列的字符串值
+				cellNames[m] = cell.getStringCellValue();
+			}
+			for (String s : cellNames) {
+				System.out.print("得到第" + i + " 张sheet表的列头： " + s + ",");
+			}
+			System.out.println();
+
+			// 从第二行起遍历每一行
+			int rowNum = sheet.getLastRowNum();
+			System.out.println("总共有 " + rowNum + " 行");
+			for (int j = 1; j <= rowNum; j++) {
+				// 一行数据对于一个Map
+				LinkedHashMap rowMap = new LinkedHashMap();
+				// 取得某一行
+				Row row = sheet.getRow(j);
+				int cellNum = row.getLastCellNum();
+				// 遍历每一列
+				for (int k = 0; k < cellNum; k++) {
+					Cell cell = row.getCell(k);
+
+					cell.setCellStyle(cellStyle);
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					// 保存该单元格的数据到该行中
+					rowMap.put(cellNames[k], cell.getStringCellValue());
+				}
+				// 保存该行的数据到该表的List中
+				list.add(rowMap);
+			}
+			// 将该sheet表的表名为key，List转为json后的字符串为Value进行存储
+			excelMap.put(sheet.getSheetName(), JSON.toJSONString(list, false));
+		}
+
+		System.out.println("excel2json方法结束....");
+
+		return excelMap;
 	}
 
 }
