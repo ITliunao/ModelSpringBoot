@@ -21,25 +21,25 @@ public class ClassScoreDeal {
 	@RequestMapping("/getClassScore")
 	public String getClassScore() {
 		List<ClassScore> cs = classScoreService.findClassScore("001", "001");
-		List<ClassScoreRecord> data = new ArrayList();
-		String num;
-		String name;
-		String score1;
-		String score2;
-		String score3;
+		float score1 = 0;
+		float score2 = 0;
+		float score3 = 0;
 		for (int i = 0; i < cs.size(); i++) {
-			data.get(i).setNum(cs.get(i).getNum());
-			data.get(i).setName(cs.get(i).getName());
+			List<ClassScoreRecord> data = new ArrayList<>();
 
-			while (true) {
-				if (cs.get(i).getNum() == cs.get(i + 1).getNum() && i != cs.size() - 1) {
-					if (cs.get(i + 1).getCoursename() == "数学") {
-						data.get(i).setScore2(cs.get(i + 1).getScores());
-						i++;
-					}
-				} else if (cs.get(i).getNum() != cs.get(i + 1).getNum()) {
-					break;
+			String num = cs.get(i).getNum();
+			String name = cs.get(i).getName();
+			if (i > 0 && cs.get(i - 1).equals(num) || i == 0) {
+				if (cs.get(i).getCoursename().equals("语文")) {
+					score1 = cs.get(i).getScores();
+				} else if (cs.get(i).getCoursename().equals("数学")) {
+					score2 = cs.get(i).getScores();
+				} else {
+					score3 = cs.get(i).getScores();
 				}
+
+				data.add(new ClassScoreRecord(num, name, score1, score2, score3));
+				System.out.println(data.toString());
 			}
 		}
 		return "";
