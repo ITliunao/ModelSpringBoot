@@ -56,4 +56,9 @@ public class ViewRoute {
 		mav.setViewName("stuModi");
 		return mav;
 	}
+
+	@RequestMapping("/ClassScore")
+	public String ClassScore() {
+		return "ClassScore";
+	}
 }

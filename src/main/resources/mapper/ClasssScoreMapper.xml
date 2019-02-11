@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengyuan.liunao.mapper.ClassScoreMapper">
+
+	
+
+
+
+
+    <select id="findClassScore" resultType="com.zhengyuan.liunao.entity.ClassScore">
+    	select s.num,s.name, co.coursename,sco.scores from clas_cour_teach cct 
+		inner join stu s
+		on s.classid = cct.classid and s.gradeid = cct.gradeid
+		inner join stu_cour_sco scs
+		on scs.stuid = s.num and scs.courseid = cct.courseid
+		inner join score sco
+		on sco.scoreid = scs.scoreid
+		INNER JOIN course co
+		on cct.courseid = co.courseid
+		where cct.classid=#{0} and cct.gradeid=#{1}
+		order by s.num
+    </select>
+
+</mapper>
