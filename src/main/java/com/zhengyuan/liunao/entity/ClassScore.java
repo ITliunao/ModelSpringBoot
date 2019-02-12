@@ -3,19 +3,17 @@ package com.zhengyuan.liunao.entity;
 public class ClassScore {
 	private String num;
 	private String name;
-	private String coursename;
-	private float scores;
+	private String score;
 
 	public ClassScore() {
 		super();
 	}
 
-	public ClassScore(String num, String name, String coursename, float scores) {
+	public ClassScore(String num, String name, String score) {
 		super();
 		this.num = num;
 		this.name = name;
-		this.coursename = coursename;
-		this.scores = scores;
+		this.score = score;
 	}
 
 	public String getNum() {
@@ -34,25 +32,17 @@ public class ClassScore {
 		this.name = name;
 	}
 
-	public String getCoursename() {
-		return coursename;
+	public String getScore() {
+		return score;
 	}
 
-	public void setCoursename(String coursename) {
-		this.coursename = coursename;
-	}
-
-	public float getScores() {
-		return scores;
-	}
-
-	public void setScores(float scores) {
-		this.scores = scores;
+	public void setScore(String score) {
+		this.score = score;
 	}
 
 	@Override
 	public String toString() {
-		return "ClassScore [num=" + num + ", name=" + name + ", coursename=" + coursename + ", scores=" + scores + "]";
+		return "ClassScore [num=" + num + ", name=" + name + ", score=" + score + "]";
 	}
 
 }

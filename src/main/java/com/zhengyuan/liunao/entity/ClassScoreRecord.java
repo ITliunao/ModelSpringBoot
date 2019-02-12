@@ -20,6 +20,28 @@ public class ClassScoreRecord {
 		this.score3 = score3;
 	}
 
+	public ClassScoreRecord(String num, String name, float score1) {
+		super();
+		this.num = num;
+		this.name = name;
+		this.score1 = score1;
+	}
+
+	public ClassScoreRecord(String num, String name, float score1, float score2) {
+		super();
+		this.num = num;
+		this.name = name;
+		this.score1 = score1;
+		this.score2 = score2;
+	}
+
+	public ClassScoreRecord(String num, String name) {
+		super();
+		this.num = num;
+		this.name = name;
+
+	}
+
 	public String getNum() {
 		return num;
 	}
