@@ -8,7 +8,7 @@
 
 
 
-    <select id="findStusScores" resultType="com.zhengyuan.liunao.entity.ClaCouTea">
+    <select id="findClaCouTea" resultType="com.zhengyuan.liunao.entity.ClaCouTea">
 	    	select  g.gradename,c.classname,co.coursename,t.name teacher
 FROM
 clas_cour_teach AS cct
