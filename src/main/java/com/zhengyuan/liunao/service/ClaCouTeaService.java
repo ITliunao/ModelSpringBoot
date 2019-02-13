@@ -1,12 +1,9 @@
-package com.zhengyuan.liunao.mapper;
+package com.zhengyuan.liunao.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.zhengyuan.liunao.entity.ClaCouTea;
 
-@Mapper
-public interface ClaCouTeaMapper {
+public interface ClaCouTeaService {
 	public List<ClaCouTea> findClaCouTea(String gradeid, String classid);
 }

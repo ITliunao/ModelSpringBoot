@@ -66,4 +66,9 @@ public class ViewRoute {
 	public String ClaCouSco() {
 		return "ClaCouSco";
 	}
+
+	@RequestMapping("/ClaCouTea")
+	public String ClaCouTea() {
+		return "ClaCouTea";
+	}
 }

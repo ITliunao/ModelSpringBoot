@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.zhengyuan.liunao.entity.ClassScore;
@@ -13,7 +14,7 @@ import com.zhengyuan.liunao.entity.ClassScoreRecord;
 import com.zhengyuan.liunao.service.ClassScoreService;
 import com.zhengyuan.liunao.tools.Layui;
 
-@RestController
+@Controller
 @RequestMapping("/Sys")
 public class ClassScoreDeal {
 
@@ -21,6 +22,7 @@ public class ClassScoreDeal {
 	ClassScoreService classScoreService;
 
 	@RequestMapping("/getClassScore")
+	@ResponseBody
 	public String getClassScore() {
 		List<ClassScore> cs = classScoreService.findClassScore("001", "001");
 		List<ClassScoreRecord> list = new ArrayList<ClassScoreRecord>();
