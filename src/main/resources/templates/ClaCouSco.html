@@ -48,18 +48,18 @@
  
 <div class="layui-input-inline layui-form" >
     <select id="geades" lay-filter="grade">
-      <option value="grade1">一年级</option>
-      <option value="grade2">二年级</option>
-      <option value="grade3">三年级</option>
+      <option value="001">一年级</option>
+      <option value="002">二年级</option>
+      <option value="003">三年级</option>
     </select>
  </div>
  
  <label class="layui-form-label">选择班级：</label>
   <div class="layui-input-inline layui-form" >
     <select id="classes" lay-filter="cla">
-      <option value="class1">一班</option>
-     <option value="class2">二班</option>
-     <option value="class3">三班</option>
+      <option value="001">一班</option>
+     <option value="002">二班</option>
+     <option value="003">三班</option>
     </select>
   </div>
   
@@ -68,9 +68,9 @@
   <label class="layui-form-label">选择科目：</label>
   <div class="layui-input-inline layui-form" >
     <select id="courses" lay-filter="coursename">
-      <option value="chinese">语文</option>
-       <option value="math">数学</option>
-        <option value="english">外语</option>
+      <option value="语文">语文</option>
+       <option value="数学">数学</option>
+        <option value="英语">英语</option>
     </select>
   </div>
 
@@ -144,7 +144,7 @@
              {type: 'checkbox',width:documentWidth*4/100} 
               ,{field:'num',title:'学号', width:documentWidth*10/100, sort: true}
               ,{field:'name', title:'姓名', width:documentWidth*8/100,sort:true}
-              ,{field:'courseanme',title:'学科',width:documentWidth*8/100,sort:true}
+              ,{field:'coursename',title:'学科',width:documentWidth*8/100,sort:true}
               ,{field:'scores',title:'成绩',width:documentWidth*8/100,sort:true}
              
           ]
@@ -166,12 +166,14 @@
     		        page: {
     		          curr: 1 //重新从第 1 页开始
     		        },
-    		    url:'getStuByName'
-    		        ,where: {
-    		          key: {
-    		            id: demoReload.val()
-    		          }
-    		        }
+    		    url:'getClaCouSco'
+    		    	,where: {
+    		        	  key:{
+    			              grade : grade ,
+    			              cla: cla,
+    			              coursename: coursename
+    		        	  }
+    		          } 
     		        ,method:'post'
     		      });
     		    }

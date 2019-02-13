@@ -22,7 +22,7 @@ public class ClaCouScoDeal {
 	@RequestMapping("/getClaCouSco")
 	public String getClaCouSco(@RequestParam("key[grade]") String grade, @RequestParam("key[cla]") String cla,
 			@RequestParam("key[coursename]") String coursename) {
-		List<ClaCouSco> list = claCouScoService.findStusScores("001", "001", "语文");
+		List<ClaCouSco> list = claCouScoService.findStusScores(grade, cla, coursename);
 		Layui l = Layui.data(list.size(), list);
 		return JSON.toJSONString(l);
 	}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengyuan.liunao.mapper.ClaCouTeaMapper">
+
+	
+
+
+
+
+    <select id="findStusScores" resultType="com.zhengyuan.liunao.entity.ClaCouTea">
+	    	select  g.gradename,c.classname,co.coursename,t.name teacher
+FROM
+clas_cour_teach AS cct
+INNER JOIN teacher AS t
+ON t.num = cct.teacherid
+INNER JOIN course AS co 
+ON co.courseid = cct.courseid 
+INNER JOIN grade g
+on g.gradeid = cct.gradeid
+INNER JOIN class c
+on c.classid = cct.classid
+WHERE g.gradeid = #{0} and c.classid = #{1}
+
+    </select>
+
+</mapper>
