@@ -55,8 +55,8 @@
  </div>
  
  <label class="layui-form-label">选择班级：</label>
-  <div class="layui-input-inline layui-form" lay-filter="cla">
-    <select id="classes">
+  <div class="layui-input-inline layui-form" >
+    <select id="classes" lay-filter="cla">
       <option value="class1">一班</option>
      <option value="class2">二班</option>
      <option value="class3">三班</option>
@@ -66,8 +66,8 @@
   
   
   <label class="layui-form-label">选择科目：</label>
-  <div class="layui-input-inline layui-form" lay-filter = "coursename">
-    <select id="courses">
+  <div class="layui-input-inline layui-form" >
+    <select id="courses" lay-filter="coursename">
       <option value="chinese">语文</option>
        <option value="math">数学</option>
         <option value="english">外语</option>
@@ -75,7 +75,10 @@
   </div>
 
 
- 
+  <div class="demoTable" style="margin-bottom: 20px">
+  搜索：
+  <button class="layui-btn" data-type="reload" ><i class="layui-icon">&#xe615;</i></button>
+</div>   
  
       </div>
       
@@ -102,15 +105,26 @@
   
   <script >
   var documentWidth = $(document).width();
-  var grade = "";
-  var cla="";
-  var coursename="";
-  layui.use('table','form', function(){
+  var grade = "001";
+  var cla="001";
+  var coursename="语文";
+  layui.use(['table','form'],function(){
       var table = layui.table;
       var form = layui.form;
-      form.on('select(grade)',function(data){
-    	  grade = data.grade
+      form.render();
+     form.on('select(grade)',function(data){
+    	  grade = data.value;
       })
+      
+      form.on('select(cla)',function(data){
+    	  cla = data.value;
+      })
+      
+      form.on('select(coursename)',function(data){
+    	  coursename = data.value;
+      }) 
+      
+		//alert(cla)
       table.render({
           elem: '#test'  //绑定table表格
           ,id:'stuInfo'
@@ -135,11 +149,13 @@
              
           ]
         	  ]
-          ,where: {
-              'token': token,
-              'send_name': send_name,
-              'send_data': send_data,
-          }
+         ,where: {
+        	  key:{
+	              grade : grade ,
+	              cla: cla,
+	              coursename: coursename
+        	  }
+          } 
       });
     
       
