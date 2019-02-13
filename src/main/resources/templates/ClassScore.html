@@ -42,16 +42,43 @@
       <div class="layui-row">
        
 
- <div class="demoTable" style="margin-bottom: 20px">
-  搜索姓名：
-  <div class="layui-inline">
-    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+
+<div class="layui-form-item">
+  <label class="layui-form-label">选择年级：</label>
+ 
+<div class="layui-input-inline layui-form" >
+    <select id="geades">
+      <option value="一">一年级</option>
+    </select>
+ </div>
+ 
+ <label class="layui-form-label">选择班级：</label>
+  <div class="layui-input-inline layui-form">
+    <select id="classes">
+      <option value="">请选择</option>
+      <option value="1">一班</option>
+      <option value="2">华南理工大学五山校区</option>
+      <option value="3">中山大学珠海校区</option>
+      <option value="4">中山大学大学城校区</option>
+    </select>
   </div>
-  <button class="layui-btn" data-type="reload" ><i class="layui-icon">&#xe615;</i></button>
-</div>   
+  
+  
+  
+  <label class="layui-form-label">选择科目：</label>
+  <div class="layui-input-inline layui-form">
+    <select id="courses">
+      <option value="">请选择</option>
+      <option value="1">语文</option>
+      <option value="2">华南理工大学五山校区</option>
+      <option value="3">中山大学珠海校区</option>
+      <option value="4">中山大学大学城校区</option>
+    </select>
+  </div>
 
 
-
+ 
+ 
       </div>
       
       <xblock >
@@ -97,11 +124,10 @@
         	  [
              {type: 'checkbox',width:documentWidth*4/100} 
               ,{field:'num',title:'学号', width:documentWidth*10/100, sort: true}
-              ,{field:'name', title:'姓名', width:documentWidth*8/100}
-              ,{field:'chinese',title:'语文',width:documentWidth*8/100}
-              ,{field:'math',title:'数学',width:documentWidth*8/100}
-              ,{field:'english',title:'英语',width:documentWidth*8/100}
-              ,{field:'scores', title:'成绩', width:documentWidth*10/100, sort: true}
+              ,{field:'name', title:'姓名', width:documentWidth*8/100,sort:true}
+              ,{field:'chinese',title:'语文',width:documentWidth*8/100,sort:true}
+              ,{field:'math',title:'数学',width:documentWidth*8/100,sort:true}
+              ,{field:'english',title:'英语',width:documentWidth*8/100,sort:true}
              
           ]
         	  ]

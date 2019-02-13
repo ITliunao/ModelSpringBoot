@@ -1,15 +1,25 @@
 package com.zhengyuan.liunao.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+
 public class Stu {
 	private int id;
+	@Excel(name = "学生学号", height = 20, width = 30)
 	private String num;
 	private String psw;
+	@Excel(name = "学生姓名", height = 20, width = 30)
 	private String name;
+	@Excel(name = "学生性别", height = 20, width = 30)
 	private String sex;
+	@Excel(name = "学生电话", height = 20, width = 30)
 	private String phone;
+	@Excel(name = "学生头像", type = 2, width = 40, height = 20, imageType = 1)
 	private String photo;
+	@Excel(name = "学生qq", height = 20, width = 30)
 	private String qq;
+	@Excel(name = "学生班级", height = 20, width = 30)
 	private String classid;
+	@Excel(name = "学生年级", height = 20, width = 30)
 	private String gradeid;
 
 	public Stu(int id, String num, String psw, String name, String sex, String phone, String photo, String qq,

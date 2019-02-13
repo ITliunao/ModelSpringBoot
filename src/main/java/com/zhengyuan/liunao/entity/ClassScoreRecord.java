@@ -1,45 +1,23 @@
 package com.zhengyuan.liunao.entity;
 
 public class ClassScoreRecord {
-	private String num;
-	private String name;
-	private float score1;
-	private float score2;
-	private float score3;
+	public String num;
+	public String name;
+	public String chinese;
+	public String math;
+	public String english;
 
 	public ClassScoreRecord() {
 		super();
 	}
 
-	public ClassScoreRecord(String num, String name, float score1, float score2, float score3) {
+	public ClassScoreRecord(String num, String name, String chinese, String math, String english) {
 		super();
 		this.num = num;
 		this.name = name;
-		this.score1 = score1;
-		this.score2 = score2;
-		this.score3 = score3;
-	}
-
-	public ClassScoreRecord(String num, String name, float score1) {
-		super();
-		this.num = num;
-		this.name = name;
-		this.score1 = score1;
-	}
-
-	public ClassScoreRecord(String num, String name, float score1, float score2) {
-		super();
-		this.num = num;
-		this.name = name;
-		this.score1 = score1;
-		this.score2 = score2;
-	}
-
-	public ClassScoreRecord(String num, String name) {
-		super();
-		this.num = num;
-		this.name = name;
-
+		this.chinese = chinese;
+		this.math = math;
+		this.english = english;
 	}
 
 	public String getNum() {
@@ -58,34 +36,34 @@ public class ClassScoreRecord {
 		this.name = name;
 	}
 
-	public float getScore1() {
-		return score1;
+	public String getchinese() {
+		return chinese;
 	}
 
-	public void setScore1(float score1) {
-		this.score1 = score1;
+	public void setchinese(String chinese) {
+		this.chinese = chinese;
 	}
 
-	public float getScore2() {
-		return score2;
+	public String getmath() {
+		return math;
 	}
 
-	public void setScore2(float score2) {
-		this.score2 = score2;
+	public void setmath(String math) {
+		this.math = math;
 	}
 
-	public float getScore3() {
-		return score3;
+	public String getenglish() {
+		return english;
 	}
 
-	public void setScore3(float score3) {
-		this.score3 = score3;
+	public void setenglish(String english) {
+		this.english = english;
 	}
 
 	@Override
 	public String toString() {
-		return "ClassScoreRecord [num=" + num + ", name=" + name + ", score1=" + score1 + ", score2=" + score2
-				+ ", score3=" + score3 + "]";
+		return "ClassScoreRecord [num=" + num + ", name=" + name + ", chinese=" + chinese + ", math=" + math
+				+ ", english=" + english + "]";
 	}
 
 }

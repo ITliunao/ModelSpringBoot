@@ -33,7 +33,7 @@ where s.num = '001'
 
 
 //查询1501级一班所有学生成绩（标明各科的成绩,按照学号排序）
-select  co.coursename,s.name,sco.scores from clas_cour_teach cct 
+select  s.num,GROUP_CONCAT(CONCAT(co.coursename,':',sco.scores)) score ,s.name from clas_cour_teach cct 
 inner join stu s
 on s.classid = cct.classid and s.gradeid = cct.gradeid
 inner join stu_cour_sco scs
@@ -42,5 +42,25 @@ inner join score sco
 on sco.scoreid = scs.scoreid
 INNER JOIN course co
 on cct.courseid = co.courseid
-where cct.classid='001' and cct.gradeid='001' 
+where cct.classid='001' and cct.gradeid='001'
+GROUP BY s.num
+
+
+
+//查询老师所要打分的课程以及对应的学生
+select  s.num,sco.scores,s.name from clas_cour_teach cct 
+inner join stu s
+on s.classid = cct.classid and s.gradeid = cct.gradeid
+inner join stu_cour_sco scs
+on scs.stuid = s.num and scs.courseid = cct.courseid
+inner join score sco
+on sco.scoreid = scs.scoreid
+INNER JOIN course co
+on cct.courseid = co.courseid
+where cct.classid='001' and cct.gradeid='001' and co.coursename in (select co.coursename from clas_cour_teach cct 
+inner join teacher t
+on t.num = cct.teacherid
+left join course co
+on co.courseid = cct.courseid
+where t.`name`="cathy" and cct.gradeid='001' and cct.classid='001')
 

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +45,7 @@ public class StuInfoDownload {
 			content[i][6] = stu.getQq();
 		}
 
-		HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);
+		Workbook wb = ExcelUtil.getHSSFWorkbook(null, new Stu(), list);
 		this.setResponseHeader(response, fileName);
 		OutputStream os = response.getOutputStream();
 		wb.write(os);
