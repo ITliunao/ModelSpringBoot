@@ -61,4 +61,9 @@ public class ViewRoute {
 	public String ClassScore() {
 		return "ClassScore";
 	}
+
+	@RequestMapping("/ClaCouSco")
+	public String ClaCouSco() {
+		return "ClaCouSco";
+	}
 }

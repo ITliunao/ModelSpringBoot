@@ -47,8 +47,7 @@
   <label class="layui-form-label">选择年级：</label>
  
 <div class="layui-input-inline layui-form" >
-    <select id="geades">
-   	 <option value="">请选择</option>
+    <select id="geades" lay-filter="grade">
       <option value="grade1">一年级</option>
       <option value="grade2">二年级</option>
       <option value="grade3">三年级</option>
@@ -56,9 +55,8 @@
  </div>
  
  <label class="layui-form-label">选择班级：</label>
-  <div class="layui-input-inline layui-form">
+  <div class="layui-input-inline layui-form" lay-filter="cla">
     <select id="classes">
-      <option value="">请选择</option>
       <option value="class1">一班</option>
      <option value="class2">二班</option>
      <option value="class3">三班</option>
@@ -68,9 +66,8 @@
   
   
   <label class="layui-form-label">选择科目：</label>
-  <div class="layui-input-inline layui-form">
+  <div class="layui-input-inline layui-form" lay-filter = "coursename">
     <select id="courses">
-      <option value="">请选择</option>
       <option value="chinese">语文</option>
        <option value="math">数学</option>
         <option value="english">外语</option>
@@ -105,13 +102,20 @@
   
   <script >
   var documentWidth = $(document).width();
-  layui.use('table', function(){
+  var grade = "";
+  var cla="";
+  var coursename="";
+  layui.use('table','form', function(){
       var table = layui.table;
+      var form = layui.form;
+      form.on('select(grade)',function(data){
+    	  grade = data.grade
+      })
       table.render({
           elem: '#test'  //绑定table表格
           ,id:'stuInfo'
-          ,method:'post'
-          ,url: 'getClassScore' //后台springmvc接收路径
+          ,method:'get'
+          ,url: 'getClaCouSco' //后台springmvc接收路径
           ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
   	        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
 	      //,curr: 5 //设定初始在第 5 页
@@ -126,12 +130,16 @@
              {type: 'checkbox',width:documentWidth*4/100} 
               ,{field:'num',title:'学号', width:documentWidth*10/100, sort: true}
               ,{field:'name', title:'姓名', width:documentWidth*8/100,sort:true}
-              ,{field:'chinese',title:'语文',width:documentWidth*8/100,sort:true}
-              ,{field:'math',title:'数学',width:documentWidth*8/100,sort:true}
-              ,{field:'english',title:'英语',width:documentWidth*8/100,sort:true}
+              ,{field:'courseanme',title:'学科',width:documentWidth*8/100,sort:true}
+              ,{field:'scores',title:'成绩',width:documentWidth*8/100,sort:true}
              
           ]
         	  ]
+          ,where: {
+              'token': token,
+              'send_name': send_name,
+              'send_data': send_data,
+          }
       });
     
       
