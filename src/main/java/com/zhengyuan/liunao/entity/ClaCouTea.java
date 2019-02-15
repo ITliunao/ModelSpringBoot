@@ -1,45 +1,27 @@
 package com.zhengyuan.liunao.entity;
 
 public class ClaCouTea {
-	public String gradeName;
-	public String className;
-	public String courseName;
+	public String num;
 	public String teacher;
+	public String info;
 
 	public ClaCouTea() {
 		super();
 	}
 
-	public ClaCouTea(String gradeName, String className, String courseName, String teacher) {
+	public ClaCouTea(String num, String teacher, String info) {
 		super();
-		this.gradeName = gradeName;
-		this.className = className;
-		this.courseName = courseName;
+		this.num = num;
 		this.teacher = teacher;
+		this.info = info;
 	}
 
-	public String getGradeName() {
-		return gradeName;
+	public String getNum() {
+		return num;
 	}
 
-	public void setGradeName(String gradeName) {
-		this.gradeName = gradeName;
-	}
-
-	public String getClassName() {
-		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public void setNum(String num) {
+		this.num = num;
 	}
 
 	public String getTeacher() {
@@ -50,10 +32,17 @@ public class ClaCouTea {
 		this.teacher = teacher;
 	}
 
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 	@Override
 	public String toString() {
-		return "ClaCouTea [gradeName=" + gradeName + ", className=" + className + ", courseName=" + courseName
-				+ ", teacher=" + teacher + "]";
+		return "ClaCouTea [num=" + num + ", teacher=" + teacher + ", info=" + info + "]";
 	}
 
 }

@@ -9,7 +9,7 @@
 
 
     <select id="findClaCouTea" resultType="com.zhengyuan.liunao.entity.ClaCouTea">
-	    	select  g.gradename,c.classname,co.coursename,t.name teacher
+select t.num,t.name teacher,co.coursename info
 FROM
 clas_cour_teach AS cct
 INNER JOIN teacher AS t
@@ -21,7 +21,7 @@ on g.gradeid = cct.gradeid
 INNER JOIN class c
 on c.classid = cct.classid
 WHERE g.gradeid = #{0} and c.classid = #{1}
-
+GROUP BY co.courseid
     </select>
 
 </mapper>

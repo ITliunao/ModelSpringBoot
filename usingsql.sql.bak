@@ -76,23 +76,3 @@ INNER JOIN course co
 on co.courseid = scs.courseid
 where s.num = 'aa0001' 
 
-
-//给某位学生的某门课程打分
-update score  set scores = '67'
-where score.scoreid=
-(select info.scoreid from 
-			(
-
-			select scs.scoreid FROM
-			stu_cour_sco scs
-			inner join stu s
-			on scs.stuid=s.num
-			inner JOIN score sc
-			on sc.scoreid = scs.scoreid
-			INNER JOIN course co 
-			on co.courseid = scs.courseid
-			where s.num = 'aa0001' and co.coursename='语文'
-			)
-     info
-
-)
