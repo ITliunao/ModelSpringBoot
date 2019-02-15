@@ -96,9 +96,7 @@
     <a title="修改信息 "   onclick="stuModi()" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除"  onclick="deleteStu()" href="javascript:;" lay-event="edit">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
+             
 </script>
   
   
@@ -146,7 +144,7 @@
               ,{field:'name', title:'姓名', width:documentWidth*8/100,sort:true}
               ,{field:'coursename',title:'学科',width:documentWidth*8/100,sort:true}
               ,{field:'scores',title:'成绩',width:documentWidth*8/100,sort:true}
-             
+              ,{field:'operation',title:'操作',toolbar: '#barDemo'}
           ]
         	  ]
          ,where: {

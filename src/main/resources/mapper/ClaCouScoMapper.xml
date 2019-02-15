@@ -20,5 +20,28 @@ INNER JOIN course co
 on cct.courseid = co.courseid
 where cct.gradeid=#{0} and cct.classid=#{1} and co.coursename =#{2}
     </select>
+    
+    
+    <update id='updateStuSco'>
+
+		update score  set scores = #{0}
+where score.scoreid=
+(select info.scoreid from 
+			(
+
+			select scs.scoreid FROM
+			stu_cour_sco scs
+			inner join stu s
+			on scs.stuid=s.num
+			inner JOIN score sc
+			on sc.scoreid = scs.scoreid
+			INNER JOIN course co 
+			on co.courseid = scs.courseid
+			where s.num = #{1} and co.coursename=#{2}
+			)
+     info
+
+)
+    </update>
 
 </mapper>

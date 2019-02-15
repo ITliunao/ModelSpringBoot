@@ -9,4 +9,6 @@ import com.zhengyuan.liunao.entity.ClaCouSco;
 @Mapper
 public interface ClaCouScoMapper {
 	public List<ClaCouSco> findStusScores(String gradeid, String classid, String coursename);
+
+	public int updateStuSco(float scores, String num, String courseName);
 }
